@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Liste des vols</title>
+</head>
+<style>
+
+	h1 {
+		color: #333;
+		text-align: center;
+		margin-top: 20px;
+	}
+	 
+	button {
+		padding: 10px 20px;
+		background-color: #333;
+		color: #fff;
+		border: none;
+		border-radius: 5px;
+		font-size: 16px;
+		cursor: pointer;
+	}
+	
+	button:hover {
+		background-color: #555;
+	}
+	
+	table {
+		margin-top: 20px;
+		border-collapse: collapse;
+		width: 100%;
+	}
+	
+	th, td {
+		text-align: left;
+		padding: 10px;
+		border-bottom: 1px solid #ddd;
+	}
+	
+	th {
+		background-color: #333;
+		color: #fff;
+	}
+	
+	tr:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+	label[for="destination"] {
+  font-weight: bold;
+  font-size: 18px;
+  color: #555;
+  margin-right: 10px;
+}
+
+</style>
+
+ 
+<body>
+	<h1>Liste des vols</h1>
+	
+	<form  th:action="@{/selectedVols}" method="post">
+		 
+		<label for="destination" >Destination :</label>
+		<input type="text" name="lieuArriver" id="lieuArriver">
+		
+		<button type="submit">Rechercher</button>
+	</form>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>nombre de place dans le vol</th>
+				<th>Date de départ</th>
+				<th>Destination</th>
+				<th>Prix</th>
+				<th>Reserver</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="vol : ${volselected}">
+				<td th:text="${vol.nbP}"></td>
+				<td th:text="${vol.dateAller}"></td>
+				<td th:text="${vol.lieuArriver}"></td>
+				<td th:text="${vol.prix}"></td>
+				<td> <a th:href="@{/ajouterRes/{id}(id=${vol.id})}" class="btn  ">Reserver</a></td>
+
+			</tr>
+		</tbody>
+	</table>
+	  		<a th:href="@{/home}" class="btn btn-primary btn-sm mb-3" style="color: rgb(0, 0, 0); font-family: fantasy;"> BACK_HOME </a>
+
+</body>
+</html>

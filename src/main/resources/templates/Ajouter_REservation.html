@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+ <head>
+ <meta charset="UTF-8" />
+ <title>Add res</title>
+  </head>
+ <style>
+ form {
+  width: 50%;
+  margin: 0 auto;
+}
+ 
+
+
+ 
+input[type="text"] {
+  display: block;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+input[type="submit"] {
+  background-color: #008CBA;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+input[type="submit"]:hover {
+  background-color: #006D9E;
+}
+
+ 
+ </style>
+ <body>
+  <h1>Create a Reservation:</h1>
+  <form th:action="@{/enregistrerRes}" th:object="${res}" method="POST">
+    code de vol:
+    <input type="text" id="code" th:field="*{idvol}" />
+    <span id="codeError" style="color: red;"></span>
+    <br />
+    name:
+    <input type="text" id="username" th:field="*{username}" />
+    <span id="usernameError" style="color: red;"></span>
+    <br />
+    nombre de place:
+    <input type="text" id="nbp" th:field="*{nbp}" />
+    <span id="nbpError" style="color: red;"></span>
+    <br />
+    <input type="submit" value="Create" />
+  </form>
+  <br />
+
+  <script>
+    var codeField = document.getElementById("code");
+    var usernameField = document.getElementById("username");
+    var nbpField = document.getElementById("nbp");
+
+    codeField.addEventListener("input", function(event) {
+      var currentValue = event.target.value.replace(/[^0-9]/g, "");
+      event.target.value = currentValue;
+
+      if (currentValue !== event.target.value) {
+        document.getElementById("codeError").textContent = "Code must be a number";
+      } else {
+        document.getElementById("codeError").textContent = "";
+      }
+    });
+
+    usernameField.addEventListener("input", function(event) {
+      var currentValue = event.target.value.replace(/[^a-zA-Z0-9 ]/g, "");
+      event.target.value = currentValue;
+
+      if (currentValue !== event.target.value) {
+        document.getElementById("usernameError").textContent = "Name must not contain special characters";
+      } else {
+        document.getElementById("usernameError").textContent = "";
+      }
+    });
+
+    nbpField.addEventListener("input", function(event) {
+      var currentValue = event.target.value.replace(/[^0-9]/g, "");
+      event.target.value = currentValue;
+
+      if (currentValue !== event.target.value) {
+        document.getElementById("nbpError").textContent = "Number of places must be a number";
+      } else {
+        document.getElementById("nbpError").textContent = "";
+      }
+    });
+
+    // Prevent form submission if any errors are present
+    document.querySelector("form").addEventListener("submit", function(event) {
+      var codeError = document.getElementById("codeError");
+      var usernameError = document.getElementById("usernameError");
+      var nbpError = document.getElementById("nbpError");
+
+      if (codeError.textContent || usernameError.textContent || nbpError.textContent) {
+        event.preventDefault();
+      }
+    });
+  </script>
+  		<a th:href="@{/home}" class="btn btn-primary btn-sm mb-3" style="color: rgb(0, 0, 0); font-family: fantasy;"> BACK_HOME </a>
+
+</body>

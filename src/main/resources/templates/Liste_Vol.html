@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Passager Management System</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    
+
+</head>
+<style>
+
+</style>
+
+<body>
+
+    <div class="container my-2">
+        <h1>VOL List</h1>
+
+        <a th:href="@{/ajouterVol}" class="btn btn-primary btn-sm mb-3"> Add vol </a>
+        <a th:href="@{/selectedVols}" class="btn btn-primary btn-sm mb-3"> select vol by destination</a>
+		<a th:href="@{/selectedVolsbydepart_lieu}" class="btn btn-primary btn-sm mb-3"> select vol by destination et depart </a>
+
+        <table border="1" class="table table-striped table-responsive-md">
+            <thead>
+                <tr>
+                	<th>  code de vol</th>
+                   <th>  Nombre de place</th>
+                    <th>  Date depart</th>
+                    <th>  Date arriver</th>
+                    <th>  Prix</th>
+                    <th>  Lieu depart</th>
+                    <th>  Liex arriver</th>
+                     <th>  Reserver</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="vol : ${vols}">
+                	<td th:text="${vol.id}"></td>
+                    <td th:text="${vol.nbP}"></td>
+                    <td th:text="${vol.dateAller}"></td>
+                    <td th:text="${vol.dateArriver}"></td>
+                      <td th:text="${vol.prix}"></td>
+                    <td th:text="${vol.lieuDepart}"></td>
+                    <td th:text="${vol.lieuArriver}"></td>
+                  	 <td> <a th:href="@{/ajouterRes/{id}(id=${vol.id})}" class="btn" >Reserver</a></td>
+
+                </tr>
+            </tbody>
+        </table>
+        
+    </div>
+    
+    <script>
+    const reserverLinks = document.querySelectorAll('a[href*="/ajouterRes/"]');
+
+    reserverLinks.forEach(link => {
+        link.addEventListener('click', e => {
+            const nbp = link.parentElement.previousElementSibling.textContent;
+            if (nbp === '0') {
+                e.preventDefault();
+                alert('Vol complet, aucune place disponible.');
+            }
+        });
+    });
+</script>
+  		<a th:href="@{/home}" class="btn btn-primary btn-sm mb-3" style="color: rgb(255, 255, 255); "> BACK_HOME </a>
+
+</body>
+
+</html>
